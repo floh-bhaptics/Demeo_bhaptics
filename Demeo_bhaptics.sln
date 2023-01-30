@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demeo_bhaptics", "Demeo_bhaptics.csproj", "{6BBFD180-1984-4D53-B0F6-0C8E8D082E88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BBFD180-1984-4D53-B0F6-0C8E8D082E88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BBFD180-1984-4D53-B0F6-0C8E8D082E88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BBFD180-1984-4D53-B0F6-0C8E8D082E88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BBFD180-1984-4D53-B0F6-0C8E8D082E88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BA62F301-B94A-4EE8-B261-186283D05013}
+	EndGlobalSection
+EndGlobal
