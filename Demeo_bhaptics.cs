@@ -54,11 +54,96 @@ namespace Demeo_bhaptics
                 if (source.networkID == myNetworkId)
                 {
                     tactsuitVr.LOG("Damaged something!");
+                    tactsuitVr.PlaybackHaptics("Healing");
                 }
                 if (mainTarget.networkID == myNetworkId)
                 {
+                    if (__instance.abilityDamage.targetDamage <= 0) return;
                     if (diceResult == Dice.Outcome.Miss) return;
                     tactsuitVr.LOG("Got hit!");
+                    string damageType = "Impact";
+                    switch (__instance.abilityKey)
+                    {
+                        case DataKeys.AbilityKey.PlayerMelee:
+                            damageType = "BladeHit";
+                            break;
+                        case DataKeys.AbilityKey.AcidSpit:
+                            damageType = "Poison";
+                            break;
+                        case DataKeys.AbilityKey.BossShockwave:
+                            damageType = "ExplosionUp";
+                            break;
+                        case DataKeys.AbilityKey.Corrupt:
+                            damageType = "Poison";
+                            break;
+                        case DataKeys.AbilityKey.CorruptionBomb:
+                            damageType = "ExplosionUp";
+                            break;
+                        case DataKeys.AbilityKey.DrainLife:
+                            damageType = "Poison";
+                            break;
+                        case DataKeys.AbilityKey.Electricity:
+                            damageType = "Electrocution";
+                            break;
+                        case DataKeys.AbilityKey.EnemyFireball:
+                            damageType = "FireballHit";
+                            break;
+                        case DataKeys.AbilityKey.EnemyFrostball:
+                            damageType = "FreezeHit";
+                            break;
+                        case DataKeys.AbilityKey.Explosion:
+                            damageType = "ExplosionUp";
+                            break;
+                        case DataKeys.AbilityKey.Fireball:
+                            damageType = "FireballHit";
+                            break;
+                        case DataKeys.AbilityKey.Freeze:
+                            damageType = "FreezeHit";
+                            break;
+                        case DataKeys.AbilityKey.HealingLight:
+                            damageType = "Healing";
+                            break;
+                        case DataKeys.AbilityKey.HealingPotion:
+                            damageType = "Healing";
+                            break;
+                        case DataKeys.AbilityKey.HealingPowder:
+                            damageType = "Healing";
+                            break;
+                        case DataKeys.AbilityKey.HealingWard:
+                            damageType = "Healing";
+                            break;
+                        case DataKeys.AbilityKey.HymnOfHealing:
+                            damageType = "Healing";
+                            break;
+                        case DataKeys.AbilityKey.LightningBolt:
+                            damageType = "Electrocution";
+                            break;
+                        case DataKeys.AbilityKey.Petrify:
+                            damageType = "Poison";
+                            break;
+                        case DataKeys.AbilityKey.PoisonBomb:
+                            damageType = "Poison";
+                            break;
+                        case DataKeys.AbilityKey.PoisonedTip:
+                            damageType = "Poison";
+                            break;
+                        case DataKeys.AbilityKey.PoisonGas:
+                            damageType = "Poison";
+                            break;
+                        case DataKeys.AbilityKey.ReplenishArmor:
+                            damageType = "Healing";
+                            break;
+                        case DataKeys.AbilityKey.Revive:
+                            damageType = "Healing";
+                            break;
+                        case DataKeys.AbilityKey.Shockwave:
+                            damageType = "ExplosionUp";
+                            break;
+                        default:
+                            break;
+
+                    }
+                    tactsuitVr.PlaybackHaptics(damageType);
                 }
             }
         }
