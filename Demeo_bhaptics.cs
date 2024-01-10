@@ -22,7 +22,8 @@ namespace Demeo_bhaptics
             tactsuitVr = new TactsuitVR();
             tactsuitVr.PlaybackHaptics("HeartBeat");
         }
-
+        
+        /*
         [HarmonyPatch(typeof(XrHapticModule), "Play", new Type[] { typeof(HapticHand), typeof(HapticId) })]
         public class bhaptics_Haptics
         {
@@ -32,12 +33,13 @@ namespace Demeo_bhaptics
                 if (hapticId == HapticId.DefaultClickButton) { tactsuitVr.LOG("Right? " + (hapticHand == HapticHand.RightHand).ToString()); }
             }
         }
+        */
 
         [HarmonyPatch(typeof(Dice), "OnDiceStopped", new Type[] { typeof(Dice.Outcome), typeof(Vector3), typeof(Quaternion) })]
         public class bhaptics_DiceStopped
         {
             [HarmonyPostfix]
-            public static void Postfix(Dice.Outcome outcome)
+            public static void Postfix(Dice __instance, Dice.Outcome outcome)
             {
                 if (outcome == Dice.Outcome.Miss) tactsuitVr.LOG("Miss");
                 if (outcome == Dice.Outcome.Hit) tactsuitVr.LOG("Hit");
@@ -147,7 +149,7 @@ namespace Demeo_bhaptics
                 }
             }
         }
-
+        
         [HarmonyPatch(typeof(Boardgame.Networking.INetworkController), "AllocateNetworkID", new Type[] {  })]
         public class bhaptics_AllocateNetworkID
         {
@@ -158,6 +160,6 @@ namespace Demeo_bhaptics
                 myNetworkId = __result;
             }
         }
-
+        
     }
 }

@@ -25,26 +25,26 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>D:\Games\Oculus\Software\resolution-games-demeo\Demeo VR\Mods\</OutputPath>
+    <OutputPath>F:\SteamLibrary\steamapps\common\Demeo\Mods\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>D:\Games\Oculus\Software\resolution-games-demeo\Demeo VR\MelonLoader\0Harmony.dll</HintPath>
+      <HintPath>F:\SteamLibrary\steamapps\common\Demeo\MelonLoader\net35\0Harmony.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>D:\Games\Oculus\Software\resolution-games-demeo\Demeo VR\Demeo_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>F:\SteamLibrary\steamapps\common\Demeo\demeo_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="bHapticsLib">
-      <HintPath>D:\Games\Oculus\Software\resolution-games-demeo\Demeo VR\MelonLoader\bHapticsLib.dll</HintPath>
+      <HintPath>F:\SteamLibrary\steamapps\common\Demeo\MelonLoader\net35\bHapticsLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="MelonLoader">
-      <HintPath>D:\Games\Oculus\Software\resolution-games-demeo\Demeo VR\MelonLoader\MelonLoader.dll</HintPath>
+      <HintPath>F:\SteamLibrary\steamapps\common\Demeo\MelonLoader\net35\MelonLoader.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -56,11 +56,11 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>D:\Games\Oculus\Software\resolution-games-demeo\Demeo VR\Demeo_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>F:\SteamLibrary\steamapps\common\Demeo\demeo_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>D:\Games\Oculus\Software\resolution-games-demeo\Demeo VR\Demeo_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <HintPath>F:\SteamLibrary\steamapps\common\Demeo\demeo_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
