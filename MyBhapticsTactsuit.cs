@@ -32,7 +32,7 @@ namespace MyBhapticsTactsuit
         {
             LOG("Initializing suit");
 
-            var res = BhapticsSDK2.Initialize("6629f373639b746687a23124", "q6w48tuIbvks4N3U8U4V");
+            var res = BhapticsSDK2.Initialize("66386a3a567d496e33ee72a3", "8f35lIjJAxPG8OSH2aTO");
 
             suitDisabled = res != 0;
             LOG("Starting HeartBeat and NeckTingle thread... " + res);
