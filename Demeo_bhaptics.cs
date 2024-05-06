@@ -62,7 +62,7 @@ namespace Demeo_bhaptics
                 {
                     if (__instance.abilityDamage.targetDamage <= 0) return;
                     if (diceResult == Dice.Outcome.Miss) return;
-                    tactsuitVr.LOG("Got hit!");
+                    tactsuitVr.LOG("Got hit! " + __instance.abilityKey.ToString());
                     string damageType = "Impact";
                     switch (__instance.abilityKey)
                     {
