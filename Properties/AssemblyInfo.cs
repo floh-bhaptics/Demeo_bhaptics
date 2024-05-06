@@ -1,5 +1,4 @@
-﻿using MelonLoader;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -35,5 +34,3 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0")]
 [assembly: AssemblyFileVersion("1.0.0")]
-[assembly: MelonInfo(typeof(Demeo_bhaptics.Demeo_bhaptics), "Demeo_bhaptics", "1.0.0", "Florian Fahrenberger")]
-[assembly: MelonGame("Resolution Games", "Demeo")]

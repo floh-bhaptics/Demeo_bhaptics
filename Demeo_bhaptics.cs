@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MelonLoader;
+using BepInEx;
+using BepInEx.Logging;
 using HarmonyLib;
 using MyBhapticsTactsuit;
 using Boardgame.Haptic;
@@ -13,16 +14,15 @@ using UnityEngine;
 
 namespace Demeo_bhaptics
 {
-    public class Demeo_bhaptics : MelonMod
+    [BepInPlugin("org.bepinex.plugins.Demeo_bhaptics", "Demeo bhaptics integration", "1.0.0")]
+    public class Plugin : BaseUnityPlugin
     {
-        public static TactsuitVR tactsuitVr;
+#pragma warning disable CS0109 // Remove unnecessary warning
+        internal static new ManualLogSource Log;
+#pragma warning restore CS0109
         public static int myNetworkId = 0;
-        public override void OnInitializeMelon()
-        {
-            tactsuitVr = new TactsuitVR();
-            tactsuitVr.PlaybackHaptics("HeartBeat");
-        }
-        
+        public static TactsuitVR tactsuitVr;
+
         /*
         [HarmonyPatch(typeof(XrHapticModule), "Play", new Type[] { typeof(HapticHand), typeof(HapticId) })]
         public class bhaptics_Haptics
@@ -34,8 +34,8 @@ namespace Demeo_bhaptics
             }
         }
         */
-
-        [HarmonyPatch(typeof(Dice), "OnDiceStopped", new Type[] { typeof(Dice.Outcome), typeof(Vector3), typeof(Quaternion) })]
+        /*
+        [HarmonyPatch(typeof(Dice), "OnDiceStopped", new Type[] { typeof(Dice.Outcome), typeof(Vector3), typeof(Quaternion), typeof(bool) })]
         public class bhaptics_DiceStopped
         {
             [HarmonyPostfix]
@@ -46,6 +46,8 @@ namespace Demeo_bhaptics
                 if (outcome == Dice.Outcome.Crit) tactsuitVr.LOG("Crit");
             }
         }
+        */
+
 
         [HarmonyPatch(typeof(Boardgame.BoardEntities.Abilities.Ability), "GenerateAttackDamage", new Type[] { typeof(Piece), typeof(Piece), typeof(Dice.Outcome), typeof(BoardModel), typeof(Piece[]) })]
         public class bhaptics_GenerateAttackDamage
@@ -149,6 +151,8 @@ namespace Demeo_bhaptics
                 }
             }
         }
+        
+
         
         [HarmonyPatch(typeof(Boardgame.Networking.INetworkController), "AllocateNetworkID", new Type[] {  })]
         public class bhaptics_AllocateNetworkID

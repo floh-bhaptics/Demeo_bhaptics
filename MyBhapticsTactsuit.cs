@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Bhaptics.SDK2;
-using MelonLoader;
+using Demeo_bhaptics;
 
 namespace MyBhapticsTactsuit
 {
@@ -42,7 +42,7 @@ namespace MyBhapticsTactsuit
 
         public void LOG(string logStr)
         {
-            MelonLogger.Msg(logStr);
+            Plugin.Log.LogMessage(logStr);
         }
 
 
