@@ -11,17 +11,36 @@ using Boardgame.Haptic;
 using Boardgame.BoardEntities;
 using Boardgame;
 using UnityEngine;
+using Boardgame.Data;
 
 namespace Demeo_bhaptics
 {
     [BepInPlugin("org.bepinex.plugins.Demeo_bhaptics", "Demeo bhaptics integration", "1.0.0")]
     public class Plugin : BaseUnityPlugin
     {
-#pragma warning disable CS0109 // Remove unnecessary warning
+#pragma warning disable CS0109 // Member does not hide an inherited member; new keyword is not required
         internal static new ManualLogSource Log;
-#pragma warning restore CS0109
-        public static int myNetworkId = 0;
+#pragma warning restore CS0109 // Member does not hide an inherited member; new keyword is not required
+        public static List<int> myNetworkIds = new List<int>();
+        public static bool myTurn = false;
         public static TactsuitVR tactsuitVr;
+
+        private void Awake()
+        {
+            // Make my own logger so it can be accessed from the Tactsuit class
+            Log = base.Logger;
+            // Plugin startup logic
+            Logger.LogMessage("Plugin Demeo_bhaptics is loaded!");
+            tactsuitVr = new TactsuitVR();
+            tactsuitVr.LOG("Logging works.");
+            // one startup heartbeat so you know the vest works correctly
+            tactsuitVr.PlaybackHaptics("HeartBeat");
+            // patch all functions
+            var harmony = new Harmony("bhaptics.patch.demeo");
+            harmony.PatchAll();
+        }
+
+
 
         /*
         [HarmonyPatch(typeof(XrHapticModule), "Play", new Type[] { typeof(HapticHand), typeof(HapticId) })]
@@ -34,7 +53,7 @@ namespace Demeo_bhaptics
             }
         }
         */
-        /*
+
         [HarmonyPatch(typeof(Dice), "OnDiceStopped", new Type[] { typeof(Dice.Outcome), typeof(Vector3), typeof(Quaternion), typeof(bool) })]
         public class bhaptics_DiceStopped
         {
@@ -44,23 +63,39 @@ namespace Demeo_bhaptics
                 if (outcome == Dice.Outcome.Miss) tactsuitVr.LOG("Miss");
                 if (outcome == Dice.Outcome.Hit) tactsuitVr.LOG("Hit");
                 if (outcome == Dice.Outcome.Crit) tactsuitVr.LOG("Crit");
+                tactsuitVr.PlaybackHaptics("HeartBeat");
             }
         }
-        */
 
 
-        [HarmonyPatch(typeof(Boardgame.BoardEntities.Abilities.Ability), "GenerateAttackDamage", new Type[] { typeof(Piece), typeof(Piece), typeof(Dice.Outcome), typeof(BoardModel), typeof(Piece[]) })]
+
+        [HarmonyPatch(typeof(Boardgame.BoardEntities.Abilities.Ability), "GenerateAttackDamage")]
         public class bhaptics_GenerateAttackDamage
         {
             [HarmonyPostfix]
-            public static void Postfix(Boardgame.BoardEntities.Abilities.Ability __instance, Piece source, Piece mainTarget, Dice.Outcome diceResult)
+            public static void Postfix(Boardgame.BoardEntities.Abilities.Ability __instance, Piece source, Piece mainTarget, Dice.Outcome diceResult, Piece[] targets)
             {
+                tactsuitVr.LOG("Dice outcome: " + diceResult.ToString());
+                tactsuitVr.LOG("Hooked into damage: " + __instance.abilityKey.ToString() + " " + __instance.abilityDamage.targetDamage.ToString());
+                tactsuitVr.LOG("Source ID: " + source.networkID.ToString() + " " + mainTarget.networkID.ToString());
+                tactsuitVr.LOG("My turn: " + myTurn.ToString());
+                bool attacking = source.IsPlayer();
+                bool damaged = myNetworkIds.Contains(mainTarget.networkID);
+                for (int i = 0; i < targets.Length; i++)
+                {
+                    Piece player = targets[i];
+                    if (myNetworkIds.Contains(player.networkID)) damaged = true;
+                    if (player.IsDowned()) tactsuitVr.StartHeartBeat();
+                    if (player.IsDead()) tactsuitVr.StopHeartBeat();
+                }
+                /*
                 if (source.networkID == myNetworkId)
                 {
                     tactsuitVr.LOG("Damaged something!");
                     tactsuitVr.PlaybackHaptics("Healing");
                 }
-                if (mainTarget.networkID == myNetworkId)
+                */
+                if (damaged)
                 {
                     if (__instance.abilityDamage.targetDamage <= 0) return;
                     if (diceResult == Dice.Outcome.Miss) return;
@@ -151,19 +186,26 @@ namespace Demeo_bhaptics
                 }
             }
         }
-        
 
-        
-        [HarmonyPatch(typeof(Boardgame.Networking.INetworkController), "AllocateNetworkID", new Type[] {  })]
-        public class bhaptics_AllocateNetworkID
+
+
+        [HarmonyPatch(typeof(PieceAndTurnController), "OnNewTurnStarted", new Type[] { typeof(int), typeof(int) })]
+        public class bhaptics_NewTurnStarted
         {
             [HarmonyPostfix]
-            public static void Postfix(Boardgame.Networking.INetworkController __instance, int __result)
+            public static void Postfix(PieceAndTurnController __instance)
             {
-                tactsuitVr.LOG("Network ID: " + __result.ToString());
-                myNetworkId = __result;
+                foreach (Piece piece in __instance.Pieces())
+                {
+                    if (__instance.IsPlayersTurn())
+                    {
+                        int currentID = __instance.CurrentPieceId;
+                        if (!myNetworkIds.Contains(currentID)) myNetworkIds.Add(currentID);
+                    }
+                }
             }
         }
-        
+
     }
+
 }

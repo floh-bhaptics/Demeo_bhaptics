@@ -48,6 +48,7 @@ namespace MyBhapticsTactsuit
 
         public void PlaybackHaptics(String key, float intensity = 1.0f, float duration = 1.0f)
         {
+            LOG("Playing back: " +  key);
             BhapticsSDK2.Play(key.ToLower(), intensity, duration, 0f, 0f);
         }
 
